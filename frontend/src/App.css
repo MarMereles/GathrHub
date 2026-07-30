@@ -1,0 +1,310 @@
+/* Paleta de colores de GathrHub
+   -----------------------------------------
+   --color-primary   #64054e  ciruela oscuro   (títulos, botones principales)
+   --color-accent    #9c177d  magenta          (links, acentos, hover)
+   --color-lilac     #a27cc7  lila             (badges, detalles suaves)
+   --color-support   #5b779f  azul pizarra     (bordes, elementos secundarios)
+   El resto de los tonos (fondo, texto, sombras) se derivan de esta misma gama. */
+
+:root {
+  --color-primary: #64054e;
+  --color-primary-dark: #47033a;
+  --color-accent: #9c177d;
+  --color-accent-dark: #7d1264;
+  --color-lilac: #a27cc7;
+  --color-lilac-light: #efe6f7;
+  --color-support: #5b779f;
+  --color-support-light: #eaf0f6;
+
+  --color-bg: #faf6fc;
+  --color-card: #ffffff;
+  --color-text: #34142c;
+  --color-text-muted: #7a5d74;
+  --color-border: #e3d3ea;
+}
+
+.app-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.app-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-nav a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.app-nav a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.page-header h2 {
+  margin: 0;
+  color: var(--color-primary);
+}
+
+.btn-nuevo {
+  background-color: var(--color-accent);
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn-nuevo:hover {
+  background-color: var(--color-accent-dark);
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+section ul {
+  list-style: none;
+  padding: 0;
+}
+
+section li {
+  background: var(--color-card);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-left: 3px solid var(--color-lilac);
+  box-shadow: 0 1px 4px rgba(100, 5, 78, 0.08);
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+section li a {
+  color: var(--color-support);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+section li a:hover {
+  text-decoration: underline;
+}
+
+section li button {
+  background: none;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+section li button:hover {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 2.5rem 0;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.app-header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--color-primary);
+  letter-spacing: 1px;
+}
+
+.app-header p {
+  margin: 0.25rem 0 0;
+  color: var(--color-accent);
+  font-style: italic;
+}
+
+.salon-form {
+  background: var(--color-card);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  border-top: 4px solid var(--color-primary);
+  box-shadow: 0 2px 10px rgba(100, 5, 78, 0.1);
+  margin-bottom: 2.5rem;
+}
+
+.salon-form h2,
+.salon-list h2 {
+  color: var(--color-primary);
+  margin-top: 0;
+}
+
+.salon-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-support);
+}
+
+.salon-form input,
+.salon-form textarea,
+.salon-form select {
+  margin-top: 0.35rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  background-color: #fff;
+}
+
+.salon-form input:focus,
+.salon-form textarea:focus,
+.salon-form select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-lilac-light);
+}
+
+.salon-form button {
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.salon-form button:disabled {
+  background-color: var(--color-lilac);
+  cursor: not-allowed;
+}
+
+.salon-form button:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+/* El botón de "Cancelar edición" usa el tono de apoyo para diferenciarse
+   del botón principal de Guardar */
+.salon-form button + button {
+  background-color: var(--color-support);
+}
+
+.salon-form button + button:hover:not(:disabled) {
+  background-color: #45607f;
+}
+
+.checkbox-label {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-label input {
+  width: auto;
+  margin-top: 0;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.5rem;
+}
+
+.badge-disponible {
+  background-color: var(--color-lilac-light);
+  color: var(--color-primary);
+}
+
+.badge-no-disponible {
+  background-color: #f7e2ee;
+  color: var(--color-accent-dark);
+}
+
+.error-msg {
+  color: var(--color-accent-dark);
+  font-size: 0.9rem;
+}
+
+.info-msg {
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.salon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.salon-card {
+  background: var(--color-card);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border-top: 3px solid var(--color-lilac);
+  box-shadow: 0 2px 10px rgba(100, 5, 78, 0.1);
+}
+
+.salon-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.salon-card h3 {
+  margin: 0 0 0.5rem;
+  color: var(--color-primary);
+}
+
+.salon-card p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.salon-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-support);
+}
+
+.salon-card li {
+  margin-bottom: 0.35rem;
+}

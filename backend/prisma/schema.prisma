@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Salon {
+  id            Int      @id @default(autoincrement())
+  nombre        String
+  descripcion   String
+  capacidad     Int
+  ubicacion     String
+  precioPorHora Float
+  disponible    Boolean  @default(true)
+  imagenUrl     String?
+  creadoAt      DateTime @default(now())
+  // Relación uno a muchos: un salón puede tener muchas reservas
+  reservas      Reserva[]
+
+  @@map("salones")
+}
+
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  correo    String   @unique
+  telefono  String?
+  creadoAt DateTime @default(now())
+
+  // Relación uno a muchos: un usuario puede tener muchas reservas
+  reservas  Reserva[]
+
+  @@map("usuarios")
+}
+
+model Reserva {
+  id         Int      @id @default(autoincrement())
+  fecha      DateTime
+  horaInicio String
+  horaFin    String
+  estado     String   @default("pendiente") // "pendiente" | "confirmada" | "cancelada"
+  notas      String?
+  creadoAt  DateTime @default(now())
+
+  // Claves foráneas
+  salonId    Int
+  usuarioId  Int
+
+  // Relación muchos a uno: cada reserva pertenece a un solo salón y un solo usuario
+  salon      Salon    @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@map("reservas")
+}

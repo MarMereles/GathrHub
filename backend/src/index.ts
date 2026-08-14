@@ -5,6 +5,7 @@ import { logger } from "./middlewares/logger";
 import salonRoutes from "./routes/salonRoutes";
 import reservaRoutes from "./routes/reservaRoutes";
 import usuarioRoutes from "./routes/usuarioRoutes";
+import authRoutes from "./routes/authRoutes";
 
 
 
@@ -21,6 +22,7 @@ app.use(logger);
 app.use("/api/salones", salonRoutes);
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/reservas", reservaRoutes)
+app.use("/api/auth", authRoutes);
 
 // Ruta de verificación de estado del servidor
 app.get("/", (req, res) => {

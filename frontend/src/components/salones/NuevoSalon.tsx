@@ -11,10 +11,13 @@ function NuevoSalon() {
   const [imagenUrl, setImagenUrl] = useState("");
 
   const guardar = async () => {
+
     if (!nombre || !descripcion || !capacidad || !ubicacion || !precioPorHora) {
       alert("Por favor completá todos los campos obligatorios");
       return;
     }
+
+    const token = localStorage.getItem("token");
 
     await axios.post("http://localhost:4000/api/salones", {
       nombre,
@@ -24,6 +27,10 @@ function NuevoSalon() {
       precioPorHora: Number(precioPorHora),
       disponible,
       imagenUrl: imagenUrl || null,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     alert("Salón creado");

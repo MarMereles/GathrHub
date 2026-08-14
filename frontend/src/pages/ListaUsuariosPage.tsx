@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import ListaUsuarios from "../components/usuarios/ListaUsuarios";
 
 function ListaUsuariosPage() {
@@ -6,9 +5,6 @@ function ListaUsuariosPage() {
     <div>
       <div className="page-header">
         <h2>Usuarios registrados</h2>
-        <Link to="/usuarios/crear" className="btn-nuevo">
-          + Nuevo usuario
-        </Link>
       </div>
       <ListaUsuarios />
     </div>

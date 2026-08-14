@@ -14,11 +14,18 @@ function ListaSalones() {
   }, []);
 
   const eliminar = async (id: number) => {
-    const confirmar = window.confirm("¿Seguro que querés eliminar este salón? También se eliminan sus reservas.");
+    const confirmar = window.confirm(
+      "¿Seguro que querés eliminar este salón? También se eliminan sus reservas.",
+    );
     if (!confirmar) return;
 
     try {
-      await axios.delete(`http://localhost:4000/api/salones/${id}`);
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:4000/api/salones/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setSalones((prev) => prev.filter((salon) => salon.id !== id));
     } catch (error) {
       console.log(error);
@@ -31,7 +38,8 @@ function ListaSalones() {
       <ul>
         {salones.map((salon) => (
           <li key={salon.id}>
-            {salon.nombre} — {salon.ubicacion} — Capacidad: {salon.capacidad} — Gs. {salon.precioPorHora} / hora —{" "}
+            {salon.nombre} — {salon.ubicacion} — Capacidad: {salon.capacidad} —
+            Gs. {salon.precioPorHora} / hora —{" "}
             {salon.disponible ? "Disponible" : "No disponible"}{" "}
             <Link to={`/salones/editar/${salon.id}`}>Editar</Link>{" "}
             <button onClick={() => eliminar(salon.id)}>Eliminar</button>

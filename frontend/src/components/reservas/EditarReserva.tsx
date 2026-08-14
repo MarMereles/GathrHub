@@ -25,21 +25,29 @@ function EditarReserva() {
   const [notas, setNotas] = useState("");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:4000/api/salones")
+      .get("http://localhost:4000/api/salones", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => setSalones(res.data))
       .catch((error) => console.log(error));
 
     axios
-      .get("http://localhost:4000/api/usuarios")
+      .get("http://localhost:4000/api/usuarios", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => setUsuarios(res.data))
       .catch((error) => console.log(error));
   }, []);
 
-  // Buscamos la reserva actual y precargamos el formulario
+  // Se busca la reserva actual y precargamos el formulario
   useEffect(() => {
+    const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:4000/api/reservas/${id}`)
+      .get(`http://localhost:4000/api/reservas/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         const reserva = res.data;
         setSalonId(String(reserva.salonId));
@@ -55,27 +63,41 @@ function EditarReserva() {
 
   const guardar = async () => {
     if (!salonId || !usuarioId || !fecha || !horaInicio || !horaFin) {
-      alert("Completá salón, usuario, fecha, hora de inicio y hora de fin");
+      alert(
+        "Completa los campos salón, usuario, fecha, hora de inicio y hora de fin",
+      );
       return;
     }
 
     try {
-      await axios.put(`http://localhost:4000/api/reservas/${id}`, {
-        salonId: Number(salonId),
-        usuarioId: Number(usuarioId),
-        fecha,
-        horaInicio,
-        horaFin,
-        estado,
-        notas: notas || null,
-      });
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `http://localhost:4000/api/reservas/${id}`,
+        {
+          salonId: Number(salonId),
+          usuarioId: Number(usuarioId),
+          fecha,
+          horaInicio,
+          horaFin,
+          estado,
+          notas: notas || null,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
       alert("Reserva actualizada");
       navigate("/reservas");
     } catch (error) {
       console.log(error);
       const axiosError = error as { response?: { data?: { error?: string } } };
-      alert(axiosError.response?.data?.error || "Ocurrió un error al guardar la reserva");
+      alert(
+        axiosError.response?.data?.error ||
+          "Ocurrió un error al guardar la reserva",
+      );
     }
   };
 
@@ -85,7 +107,7 @@ function EditarReserva() {
         Salón
         <br />
         <select value={salonId} onChange={(e) => setSalonId(e.target.value)}>
-          <option value="">-- Seleccioná un salón --</option>
+          <option value="">-- Selecciona un salón --</option>
           {salones.map((salon) => (
             <option key={salon.id} value={salon.id}>
               {salon.nombre}
@@ -99,8 +121,11 @@ function EditarReserva() {
       <label>
         Usuario
         <br />
-        <select value={usuarioId} onChange={(e) => setUsuarioId(e.target.value)}>
-          <option value="">-- Seleccioná un usuario --</option>
+        <select
+          value={usuarioId}
+          onChange={(e) => setUsuarioId(e.target.value)}
+        >
+          <option value="">-- Selecciona un usuario --</option>
           {usuarios.map((usuario) => (
             <option key={usuario.id} value={usuario.id}>
               {usuario.nombre} ({usuario.correo})
@@ -114,7 +139,11 @@ function EditarReserva() {
       <label>
         Fecha
         <br />
-        <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} />
+        <input
+          type="date"
+          value={fecha}
+          onChange={(e) => setFecha(e.target.value)}
+        />
       </label>
       <br />
       <br />
@@ -122,7 +151,11 @@ function EditarReserva() {
       <label>
         Hora de inicio
         <br />
-        <input type="time" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
+        <input
+          type="time"
+          value={horaInicio}
+          onChange={(e) => setHoraInicio(e.target.value)}
+        />
       </label>
       <br />
       <br />
@@ -130,7 +163,11 @@ function EditarReserva() {
       <label>
         Hora de fin
         <br />
-        <input type="time" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
+        <input
+          type="time"
+          value={horaFin}
+          onChange={(e) => setHoraFin(e.target.value)}
+        />
       </label>
       <br />
       <br />
@@ -138,7 +175,10 @@ function EditarReserva() {
       <label>
         Estado
         <br />
-        <select value={estado} onChange={(e) => setEstado(e.target.value as EstadoReserva)}>
+        <select
+          value={estado}
+          onChange={(e) => setEstado(e.target.value as EstadoReserva)}
+        >
           <option value="pendiente">Pendiente</option>
           <option value="confirmada">Confirmada</option>
           <option value="cancelada">Cancelada</option>

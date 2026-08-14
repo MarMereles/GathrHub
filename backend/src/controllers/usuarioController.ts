@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { prisma } from "../db/prisma";
+import bcrypt from "bcrypt";
 
 
 // Validación básica de formato de correo
 const correoValido = (correo: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
 
-// GET /api/usuarios
+// GET /api/usuarios (requiere estar logueado)
 // Se obtiene el listado completo de usuarios registrados
 export const obtenerUsuarios = async (req: Request, res: Response) => {
   try {
@@ -19,7 +20,7 @@ export const obtenerUsuarios = async (req: Request, res: Response) => {
   }
 };
 
-// GET /api/usuarios/:id
+// GET /api/usuarios/:id (requiere estar logueado)
 // Se obtiene un usuario específico, incluyendo sus reservas asociadas
 export const obtenerUsuarioById = async (req: Request, res: Response) => {
   try {
@@ -45,38 +46,7 @@ export const obtenerUsuarioById = async (req: Request, res: Response) => {
   }
 };
 
-// POST /api/usuarios
-// Crear un nuevo usuario
-export const crearUsuario = async (req: Request, res: Response) => {
-  try {
-    const { nombre, correo, telefono } = req.body;
-
-    if (!nombre || !correo) {
-      return res.status(400).json({ error: "Los campos nombre y correo son obligatorios" });
-    }
-
-    if (!correoValido(correo)) {
-      return res.status(400).json({ error: "El formato del correo no es válido" });
-    }
-
-    const correoExistente = await prisma.usuario.findUnique({ where: { correo } });
-    if (correoExistente) {
-      return res.status(409).json({ error: "Ya existe un usuario registrado con ese correo" });
-    }
-
-    const nuevoUsuario = await prisma.usuario.create({
-      data: { nombre, correo, telefono: telefono || null },
-    });
-
-    return res.status(201).json(nuevoUsuario);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Error al crear el usuario" });
-  }
-};
-
-
-// PUT /api/usuarios/:id
+// PUT /api/usuarios/:id (requiere estar logueado)
 // Se actualiza un usuario existente
 export const actualizarUsuario = async (req: Request, res: Response) => {
   try {

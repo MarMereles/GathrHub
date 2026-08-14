@@ -34,6 +34,7 @@ model Usuario {
   id        Int      @id @default(autoincrement())
   nombre    String
   correo    String   @unique
+  password String?    //se agrega la contraseña para login (opcional)
   telefono  String?
   creadoAt DateTime @default(now())
 

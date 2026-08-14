@@ -11,8 +11,13 @@ function EditarUsuario() {
   const [telefono, setTelefono] = useState("");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     axios
-      .get(`http://localhost:4000/api/usuarios/${id}`)
+      .get(`http://localhost:4000/api/usuarios/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         const usuario = res.data;
         setNombre(usuario.nombre);
@@ -29,27 +34,48 @@ function EditarUsuario() {
     }
 
     try {
-      await axios.put(`http://localhost:4000/api/usuarios/${id}`, {
-        nombre,
-        correo,
-        telefono: telefono || null,
-      });
+      const token = localStorage.getItem("token");
+
+      await axios.put(
+        `http://localhost:4000/api/usuarios/${id}`,
+        {
+          nombre,
+          correo,
+          telefono: telefono || null,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
       alert("Usuario actualizado");
       navigate("/usuarios");
     } catch (error) {
       console.log(error);
       const axiosError = error as { response?: { data?: { error?: string } } };
-      alert(axiosError.response?.data?.error || "Ocurrió un error al guardar el usuario");
+      alert(
+        axiosError.response?.data?.error ||
+          "Ocurrió un error al guardar el usuario",
+      );
     }
   };
 
   return (
     <div className="salon-form">
-      <input placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+      <input
+        placeholder="Nombre"
+        value={nombre}
+        onChange={(e) => setNombre(e.target.value)}
+      />
       <br />
 
-      <input placeholder="Correo" value={correo} onChange={(e) => setCorreo(e.target.value)} />
+      <input
+        placeholder="Correo"
+        value={correo}
+        onChange={(e) => setCorreo(e.target.value)}
+      />
       <br />
 
       <input

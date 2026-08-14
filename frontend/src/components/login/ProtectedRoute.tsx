@@ -1,0 +1,8 @@
+import { Navigate } from "react-router-dom";
+import type { JSX } from "react/jsx-runtime";
+
+function ProtectedRoute({ children }: { children: JSX.Element }) {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/login" />;
+}
+export default ProtectedRoute;

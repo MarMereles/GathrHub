@@ -114,7 +114,7 @@ export const actualizarSalon = async (req:Request, res: Response) => {
 
 //Borrar registro de salon
 //DELETE /api/salones/:id
-export const eiliminarSalon = async (req: Request, res: Response) => {
+export const eliminarSalon = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 

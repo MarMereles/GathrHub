@@ -18,13 +18,24 @@ function NuevaReserva() {
 
   // Cargamos las opciones para los <select> de salón y usuario
   useEffect(() => {
+    const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:4000/api/salones")
+      .get("http://localhost:4000/api/salones", {
+        //aqui se agrega la url del backend para poder hacer la peticion de los usuarios
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => setSalones(res.data))
       .catch((error) => console.log(error));
 
     axios
-      .get("http://localhost:4000/api/usuarios")
+      .get("http://localhost:4000/api/usuarios", {
+        //aqui se agrega la url del backend para poder hacer la peticion de los usuarios
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => setUsuarios(res.data))
       .catch((error) => console.log(error));
   }, []);
@@ -36,15 +47,25 @@ function NuevaReserva() {
     }
 
     try {
-      await axios.post("http://localhost:4000/api/reservas", {
-        salonId: Number(salonId),
-        usuarioId: Number(usuarioId),
-        fecha,
-        horaInicio,
-        horaFin,
-        estado,
-        notas: notas || null,
-      });
+      const token = localStorage.getItem("token");
+
+      await axios.post(
+        "http://localhost:4000/api/reservas",
+        {
+          salonId: Number(salonId),
+          usuarioId: Number(usuarioId),
+          fecha,
+          horaInicio,
+          horaFin,
+          estado,
+          notas: notas || null,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
       alert("Reserva creada");
 
@@ -58,13 +79,17 @@ function NuevaReserva() {
     } catch (error) {
       console.log(error);
       const axiosError = error as { response?: { data?: { error?: string } } };
-      // El backend devuelve, por ejemplo, un 409 si hay conflicto de horario
-      alert(axiosError.response?.data?.error || "Ocurrió un error al guardar la reserva");
+      // El backend devuelve,un error ( 409 ) si hay conflicto de horario
+      alert(
+        axiosError.response?.data?.error ||
+          "Ocurrió un error al guardar la reserva",
+      );
     }
   };
 
   return (
     <div className="salon-form">
+
       <label>
         Salón
         <br />
@@ -83,7 +108,10 @@ function NuevaReserva() {
       <label>
         Usuario
         <br />
-        <select value={usuarioId} onChange={(e) => setUsuarioId(e.target.value)}>
+        <select
+          value={usuarioId}
+          onChange={(e) => setUsuarioId(e.target.value)}
+        >
           <option value="">-- Seleccioná un usuario --</option>
           {usuarios.map((usuario) => (
             <option key={usuario.id} value={usuario.id}>
@@ -98,7 +126,11 @@ function NuevaReserva() {
       <label>
         Fecha
         <br />
-        <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} />
+        <input
+          type="date"
+          value={fecha}
+          onChange={(e) => setFecha(e.target.value)}
+        />
       </label>
       <br />
       <br />
@@ -106,7 +138,11 @@ function NuevaReserva() {
       <label>
         Hora de inicio
         <br />
-        <input type="time" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
+        <input
+          type="time"
+          value={horaInicio}
+          onChange={(e) => setHoraInicio(e.target.value)}
+        />
       </label>
       <br />
       <br />
@@ -114,7 +150,11 @@ function NuevaReserva() {
       <label>
         Hora de fin
         <br />
-        <input type="time" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
+        <input
+          type="time"
+          value={horaFin}
+          onChange={(e) => setHoraFin(e.target.value)}
+        />
       </label>
       <br />
       <br />
@@ -122,7 +162,10 @@ function NuevaReserva() {
       <label>
         Estado
         <br />
-        <select value={estado} onChange={(e) => setEstado(e.target.value as EstadoReserva)}>
+        <select
+          value={estado}
+          onChange={(e) => setEstado(e.target.value as EstadoReserva)}
+        >
           <option value="pendiente">Pendiente</option>
           <option value="confirmada">Confirmada</option>
           <option value="cancelada">Cancelada</option>

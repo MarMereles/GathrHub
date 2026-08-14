@@ -39,6 +39,8 @@ function EditarSalon() {
       return;
     }
 
+    const token = localStorage.getItem("token");
+
     await axios.put(`http://localhost:4000/api/salones/${id}`, {
       nombre,
       descripcion,
@@ -47,6 +49,10 @@ function EditarSalon() {
       precioPorHora: Number(precioPorHora),
       disponible,
       imagenUrl: imagenUrl || null,
+    },{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     alert("Salón actualizado");

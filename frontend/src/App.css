@@ -152,21 +152,30 @@ main li button:hover {
   background-color: var(--color-accent-dark);
 }
 
-.btn-logout {
-  background-color: var(--color-accent);
+.btn-clima {
+  background-color: var(--color-support);
   color: #fff;
   border: none;
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 6px;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  margin-right: 1rem; /* separación con los enlaces */
+  text-decoration: none;
+  display: inline-block;
+  font-family: inherit;
+  margin-left: 1rem;
 }
 
-.btn-logout:hover {
-  background-color: var(--color-accent-dark);
+.btn-clima:hover {
+  background-color: #45607f;
+}
+
+.page-title {
+  color: var(--color-primary);
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
 section {
@@ -244,7 +253,7 @@ hr {
 
 .app-header p {
   margin: 0.25rem 0 0;
-  color: var(--color-accent);
+  color: var(--color-support);
   font-style: italic;
 }
 

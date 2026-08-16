@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate, useNavigate} from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import ListaSalonesPage from "./pages/ListaSalonesPage";
 import NuevoSalonPage from "./pages/NuevoSalonPage";
 import EditarSalonPage from "./pages/EditarSalonPage";
@@ -11,6 +17,7 @@ import LoginPage from "./pages/LoginPage";
 import RegistroPage from "./pages/RegistroPage";
 import ProtectedRoute from "./components/login/ProtectedRoute";
 import "./App.css";
+import WeatherPage from "./pages/WeatherPage";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -27,9 +34,8 @@ function NavBar() {
     return null;
   }
 
-   return (
+  return (
     <nav className="app-nav">
-
       {usuario.nombre && (
         <span className="nav-usuario">👤 {usuario.nombre}</span>
       )}
@@ -37,6 +43,10 @@ function NavBar() {
       <a href="/salones">Salones</a>
       <a href="/usuarios">Usuarios</a>
       <a href="/reservas">Reservas</a>
+
+      <button  className="btn-clima" onClick={() => navigate ("/clima")}>
+        Consultar clima
+      </button>
 
       <button className="btn-logout" onClick={cerrarSesion}>
         Cerrar sesión
@@ -61,7 +71,7 @@ function App() {
             {/* Rutas públicas (no requieren token) */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registro" element={<RegistroPage />} />
-            
+
             {/* Ruta raíz: redirige según token */}
             <Route
               path="/"
@@ -133,6 +143,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <EditarReservaPage />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/clima"
+              element={
+                <ProtectedRoute>
+                  <WeatherPage />
                 </ProtectedRoute>
               }
             />

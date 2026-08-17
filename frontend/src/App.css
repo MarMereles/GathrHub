@@ -152,13 +152,13 @@ main li button:hover {
   background-color: var(--color-accent-dark);
 }
 
-.btn-clima {
+.app-nav .btn-clima {
   background-color: var(--color-support);
   color: #fff;
   border: none;
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.6rem;        /* tamaño pequeño */
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;            /* fuente pequeña */
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -168,8 +168,11 @@ main li button:hover {
   margin-left: 1rem;
 }
 
-.btn-clima:hover {
+
+.app-nav .btn-clima:hover {
   background-color: #45607f;
+  color: #fff;                     
+  text-decoration: none;
 }
 
 .page-title {

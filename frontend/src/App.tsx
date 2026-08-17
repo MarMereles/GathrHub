@@ -4,6 +4,7 @@ import {
   Route,
   Navigate,
   useNavigate,
+  Link,
 } from "react-router-dom";
 import ListaSalonesPage from "./pages/ListaSalonesPage";
 import NuevoSalonPage from "./pages/NuevoSalonPage";
@@ -18,6 +19,7 @@ import RegistroPage from "./pages/RegistroPage";
 import ProtectedRoute from "./components/login/ProtectedRoute";
 import "./App.css";
 import WeatherPage from "./pages/WeatherPage";
+import InicioPage from "./pages/InicioPage";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -26,31 +28,37 @@ function NavBar() {
 
   const cerrarSesion = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
     navigate("/login");
   };
 
-  // Si no hay token, no mostramos la barra de navegación
-  if (!token) {
-    return null;
-  }
-
   return (
     <nav className="app-nav">
-      {usuario.nombre && (
-        <span className="nav-usuario">👤 {usuario.nombre}</span>
+     
+      <Link to="/salones">Salones</Link>
+
+      {token ? (
+        // Usuario autenticado
+        <>
+          <Link to="/usuarios">Usuarios</Link>
+          <Link to="/reservas">Reservas</Link>
+          {usuario.nombre && (
+            <span className="nav-usuario">👤 {usuario.nombre}</span>
+          )}
+          <Link to="/clima" className="btn-clima">
+            Consultar clima
+          </Link>
+          <button className="btn-logout" onClick={cerrarSesion}>
+            Cerrar sesión
+          </button>
+        </>
+      ) : (
+        // Visitante: solo mostramos login/registro como enlaces normales o botones pequeños
+        <>
+          <Link to="/login" className="btn-outline">Iniciar sesión</Link>
+          <Link to="/registro" className="btn-outline">Registrarse</Link>
+        </>
       )}
-
-      <a href="/salones">Salones</a>
-      <a href="/usuarios">Usuarios</a>
-      <a href="/reservas">Reservas</a>
-
-      <button  className="btn-clima" onClick={() => navigate ("/clima")}>
-        Consultar clima
-      </button>
-
-      <button className="btn-logout" onClick={cerrarSesion}>
-        Cerrar sesión
-      </button>
     </nav>
   );
 }
@@ -67,7 +75,11 @@ function App() {
         <NavBar />
 
         <main>
-          <Routes>
+          <Routes> 
+
+            {/* Ruta raíz: página de inicio (SIEMPRE visible) */}
+            <Route path="/" element={<InicioPage />} />
+
             {/* Rutas públicas (no requieren token) */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registro" element={<RegistroPage />} />

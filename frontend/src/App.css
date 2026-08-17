@@ -95,7 +95,7 @@ main li button:hover {
 
 .app-nav a:hover {
   color: var(--color-primary);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .nav-usuario {
@@ -414,4 +414,16 @@ hr {
 
 .salon-card li {
   margin-bottom: 0.35rem;
+}
+
+.app-nav .btn-outline {
+  border: 1px solid var(--color-accent);
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  transition: background-color 0.2s ease;
+}
+
+.app-nav .btn-outline:hover {
+  background-color: var(--color-accent);
+  color: #fff;
 }
